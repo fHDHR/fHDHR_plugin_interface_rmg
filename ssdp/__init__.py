@@ -15,7 +15,7 @@ class Plugin_OBJ():
         data = ''
         data_command = "NOTIFY * HTTP/1.1"
 
-        device_xml_path = "/rmg/%s%s/device.xml" % (self.fhdhr.config.dict["main"]["uuid"], origin)
+        device_xml_path = "/rmg/%s/device.xml" % origin
 
         data_dict = {
                     "HOST": "%s:%s" % ("239.255.255.250", 1900),
@@ -33,7 +33,6 @@ class Plugin_OBJ():
             data += "%s:%s\r\n" % (data_key, data_dict[data_key])
         data += "\r\n"
 
-        self.ssdp_content = data
         return data
 
     @property
@@ -43,7 +42,7 @@ class Plugin_OBJ():
     @property
     def notify(self):
         ssdp_content = []
-        for origin in list(self.ssdp_content.keys()):
+        for origin in self.fhdhr.origins.valid_origins:
             data = self.create_ssdp_content(origin)
             ssdp_content.append(data)
         return ssdp_content
