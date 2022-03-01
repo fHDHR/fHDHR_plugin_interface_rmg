@@ -6,10 +6,13 @@ class Plugin_OBJ():
         self.fhdhr = fhdhr
 
         self.broadcast_ip = broadcast_ip
+        self.device_xml_path = '/rmg/device.xml'
 
         self.schema = "urn:plex-tv:service:MediaGrabber:1"
 
-        self.max_age = max_age
+    @property
+    def max_age(self):
+        return self.fhdhr.config.dict["rmg"]["ssdp_max_age"]
 
     def create_ssdp_content(self, origin):
         data = ''
@@ -34,10 +37,6 @@ class Plugin_OBJ():
         data += "\r\n"
 
         return data
-
-    @property
-    def enabled(self):
-        return self.fhdhr.config.dict["rmg"]["enabled"]
 
     @property
     def notify(self):
