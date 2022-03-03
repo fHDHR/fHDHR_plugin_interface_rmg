@@ -27,7 +27,7 @@ class RMG_Devices_DeviceKey():
             origin = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
             out.set('size', "1")
 
-            if self.fhdhr.origins.origins_dict[origin].setup_success:
+            if self.fhdhr.origins.get_origin_property(origin, "setup_success"):
                 alive_status = "alive"
             else:
                 alive_status = "dead"
@@ -40,7 +40,7 @@ class RMG_Devices_DeviceKey():
                                 protocol="livetv",
                                 status=alive_status,
                                 title="%s %s" % (self.fhdhr.config.dict["fhdhr"]["friendlyname"], origin),
-                                tuners=str(self.fhdhr.origins.origins_dict[origin].tuners),
+                                tuners=str(self.fhdhr.origins.get_origin_property(origin, "tuners")),
                                 uri="%s/rmg/%s%s" % (base_url, self.fhdhr.config.dict["main"]["uuid"], origin),
                                 uuid="device://tv.plex.grabbers.fHDHR/%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin),
                                 )
