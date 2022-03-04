@@ -75,7 +75,7 @@ class RMG_Devices_DeviceKey():
                            index=tuner_number,
                            status="scanning",
                            progress="99",
-                           channelsFound=str(len(list(self.fhdhr.device.channels.list[origin].keys()))),
+                           channelsFound=str(self.fhdhr.origins.origins_dict[origin].channels.count_channels),
                            )
 
                 # TODO networksScanned
