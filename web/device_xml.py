@@ -25,8 +25,11 @@ class RMG_Device_XML():
 
         if devicekey.startswith(self.fhdhr.config.dict["main"]["uuid"]):
             origin = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
-            origin_plugin_name = self.fhdhr.origins.origins_dict[origin].plugin_utils.plugin_name
-            origin_plugin_version = self.fhdhr.origins.origins_dict[origin].plugin_utils.plugin_manifest["version"]
+
+            origin_obj = self.fhdhr.origins.get_origin(origin)
+
+            origin_plugin_name = origin_obj.plugin_utils.plugin_name
+            origin_plugin_version = origin_obj.plugin_utils.plugin_manifest["version"]
 
             specVersion_out = sub_el(out, 'specVersion')
             sub_el(specVersion_out, 'major', "1")

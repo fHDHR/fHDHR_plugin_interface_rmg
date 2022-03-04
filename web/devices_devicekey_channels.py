@@ -23,11 +23,11 @@ class RMG_Devices_DeviceKey_Channels():
 
         if devicekey.startswith(self.fhdhr.config.dict["main"]["uuid"]):
             origin = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
-            out.set('size', str(len(list(self.fhdhr.device.channels.list[origin].keys()))))
+            out.set('size', str(self.fhdhr.origins.origins_dict[origin].channels.count_channels))
 
             channelslist = {}
-            for fhdhr_id in [x["id"] for x in self.fhdhr.device.channels.get_channels(origin)]:
-                channel_obj = self.fhdhr.device.channels.get_channel_obj("id", fhdhr_id, origin)
+            for fhdhr_id in self.fhdhr.origins.origins_dict[origin].channels.list_channel_ids:
+                channel_obj = self.fhdhr.origins.origins_dict[origin].channels.get_channel_obj("id", fhdhr_id)
                 if channel_obj:
                     if channel_obj.enabled:
                         channelslist[channel_obj.number] = channel_obj

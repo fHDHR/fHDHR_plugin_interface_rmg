@@ -36,7 +36,7 @@ class RMG_Devices_DeviceKey_Media():
 
         redirect_url += "&channel=%s" % (channel)
         redirect_url += "&origin=%s" % (origin)
-        redirect_url += "&stream_method=%s" % self.fhdhr.origins.origins_dict[origin].stream_method
+        redirect_url += "&stream_method=%s" % self.fhdhr.origins.get_origin_property(origin, "stream_method")
 
         redirect_url += "&accessed=%s" % urllib.parse.quote(request.url)
 

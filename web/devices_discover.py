@@ -22,11 +22,11 @@ class RMG_Devices_Discover():
         base_url = request.url_root[:-1]
 
         out = xml.etree.ElementTree.Element('MediaContainer')
-        out.set('size', str(len(list(self.fhdhr.origins.origins_dict.keys()))))
+        out.set('size', str(self.fhdhr.origins.count_origins))
 
-        for origin in list(self.fhdhr.origins.origins_dict.keys()):
+        for origin in self.fhdhr.origins.list_origins:
 
-            if self.fhdhr.origins.origins_dict[origin].setup_success:
+            if self.fhdhr.origins.get_origin_property(origin, "setup_success"):
                 alive_status = "alive"
             else:
                 alive_status = "dead"
@@ -39,7 +39,7 @@ class RMG_Devices_Discover():
                    protocol="livetv",
                    status=alive_status,
                    title="%s %s" % (self.fhdhr.config.dict["fhdhr"]["friendlyname"], origin),
-                   tuners=str(self.fhdhr.origins.origins_dict[origin].tuners),
+                   tuners=str(self.fhdhr.origins.get_origin_property(origin, "tuners")),
                    uri="%s/rmg/%s%s" % (base_url, self.fhdhr.config.dict["main"]["uuid"], origin),
                    uuid="device://tv.plex.grabbers.fHDHR/%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin),
                    thumb="favicon.ico",
