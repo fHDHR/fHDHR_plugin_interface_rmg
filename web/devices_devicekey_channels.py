@@ -26,8 +26,8 @@ class RMG_Devices_DeviceKey_Channels():
             out.set('size', str(self.fhdhr.origins.origins_dict[origin].channels.count_channels))
 
             channelslist = {}
-            for fhdhr_id in self.fhdhr.origins.origins_dict[origin].channels.list_channel_ids:
-                channel_obj = self.fhdhr.origins.origins_dict[origin].channels.get_channel_obj("id", fhdhr_id)
+            for fhdhr_channel_id in self.fhdhr.origins.origins_dict[origin].channels.list_channel_ids:
+                channel_obj = self.fhdhr.origins.origins_dict[origin].channels.get_channel_obj("id", fhdhr_channel_id)
                 if channel_obj:
                     if channel_obj.enabled:
                         channelslist[channel_obj.number] = channel_obj
