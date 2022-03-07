@@ -9,17 +9,19 @@ class RMG_Devices_Probe():
     endpoints = ["/rmg/devices/probe"]
     endpoint_name = "rmg_devices_probe"
     endpoint_methods = ["GET", "POST"]
-    endpoint_default_parameters = {
-                                    "uri": "<base_url>"
+    endpoint_parameters = {
+                            "uri": {
+                                    "default": "<base_url>"
                                     }
+                            }
 
     def __init__(self, fhdhr):
         self.fhdhr = fhdhr
 
     def __call__(self, *args):
-        return self.get(*args)
+        return self.handler(*args)
 
-    def get(self, *args):
+    def handler(self, *args):
         """Probes a specific URI for a network device, and returns a device, if it exists at the given URI."""
 
         base_url = request.url_root[:-1]

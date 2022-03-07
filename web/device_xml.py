@@ -13,7 +13,7 @@ class RMG_Device_XML():
         self.fhdhr = fhdhr
 
     def __call__(self, *args):
-        return self.get(*args)
+        return self.handler(*args)
 
     def get(self, devicekey, *args):
         """Device.xml referenced from SSDP"""

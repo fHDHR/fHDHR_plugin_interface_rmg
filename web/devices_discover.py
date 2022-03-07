@@ -14,9 +14,9 @@ class RMG_Devices_Discover():
         self.fhdhr = fhdhr
 
     def __call__(self, *args):
-        return self.get(*args)
+        return self.handler(*args)
 
-    def get(self, *args):
+    def handler(self, *args):
         """This endpoint requests the grabber attempt to discover any devices it can, and it returns zero or more devices."""
 
         base_url = request.url_root[:-1]
