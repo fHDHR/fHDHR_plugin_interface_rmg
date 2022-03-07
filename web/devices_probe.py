@@ -31,26 +31,26 @@ class RMG_Devices_Probe():
         out = xml.etree.ElementTree.Element('MediaContainer')
         out.set('size', str(len(self.fhdhr.origins.list_origins)))
 
-        for origin in self.fhdhr.origins.list_origins:
+        for origin_name in self.fhdhr.origins.list_origins:
 
-            if uri == "%s/rmg/%s%s" % (base_url, self.fhdhr.config.dict["main"]["uuid"], origin):
+            if uri == "%s/rmg/%s%s" % (base_url, self.fhdhr.config.dict["main"]["uuid"], origin_name):
 
-                if self.fhdhr.origins.get_origin_property(origin, "setup_success"):
+                if self.fhdhr.origins.get_origin_property(origin_name, "setup_success"):
                     alive_status = "alive"
                 else:
                     alive_status = "dead"
 
                 sub_el(out, 'Device',
-                       key="%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin),
+                       key="%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin_name),
                        make=self.fhdhr.config.dict["rmg"]["reporting_manufacturer"],
                        model=self.fhdhr.config.dict["rmg"]["reporting_model"],
                        modelNumber=self.fhdhr.config.internal["versions"]["fHDHR"],
                        protocol="livetv",
                        status=alive_status,
-                       title="%s %s" % (self.fhdhr.config.dict["fhdhr"]["friendlyname"], origin),
-                       tuners=str(self.fhdhr.origins.get_origin_property(origin, "tuners")),
-                       uri="%s/rmg/%s%s" % (base_url, self.fhdhr.config.dict["main"]["uuid"], origin),
-                       uuid="device://tv.plex.grabbers.fHDHR/%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin),
+                       title="%s %s" % (self.fhdhr.config.dict["fhdhr"]["friendlyname"], origin_name),
+                       tuners=str(self.fhdhr.origins.get_origin_property(origin_name, "tuners")),
+                       uri="%s/rmg/%s%s" % (base_url, self.fhdhr.config.dict["main"]["uuid"], origin_name),
+                       uuid="device://tv.plex.grabbers.fHDHR/%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin_name),
                        thumb="favicon.ico",
                        interface='network'
                        )

@@ -21,12 +21,12 @@ class RMG_Devices_DeviceKey_Networks():
 
         out = xml.etree.ElementTree.Element('MediaContainer')
         if devicekey.startswith(self.fhdhr.config.dict["main"]["uuid"]):
-            origin = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
+            origin_name = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
             out.set('size', "1")
 
             sub_el(out, 'Network',
-                   key="%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin),
-                   title="%s %s" % (self.fhdhr.config.dict["fhdhr"]["friendlyname"], origin),
+                   key="%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin_name),
+                   title="%s %s" % (self.fhdhr.config.dict["fhdhr"]["friendlyname"], origin_name),
                    )
 
         fakefile = BytesIO()

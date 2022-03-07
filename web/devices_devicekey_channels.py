@@ -22,12 +22,12 @@ class RMG_Devices_DeviceKey_Channels():
         out = xml.etree.ElementTree.Element('MediaContainer')
 
         if devicekey.startswith(self.fhdhr.config.dict["main"]["uuid"]):
-            origin = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
-            out.set('size', str(self.fhdhr.origins.origins_dict[origin].channels.count_channels))
+            origin_name = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
+            out.set('size', str(self.fhdhr.origins.origins_dict[origin_name].channels.count_channels))
 
             channelslist = {}
-            for fhdhr_channel_id in self.fhdhr.origins.origins_dict[origin].channels.list_channel_ids:
-                channel_obj = self.fhdhr.origins.origins_dict[origin].channels.get_channel_obj("id", fhdhr_channel_id)
+            for fhdhr_channel_id in self.fhdhr.origins.origins_dict[origin_name].channels.list_channel_ids:
+                channel_obj = self.fhdhr.origins.origins_dict[origin_name].channels.get_channel_obj("id", fhdhr_channel_id)
                 if channel_obj:
                     if channel_obj.enabled:
                         channelslist[channel_obj.number] = channel_obj
@@ -42,7 +42,7 @@ class RMG_Devices_DeviceKey_Channels():
                        drm="0",
                        channelIdentifier="id://%s" % channel_obj.number,
                        name=channel_obj.dict["name"],
-                       origin=channel_obj.dict["callsign"],
+                       origin_name=channel_obj.dict["callsign"],
                        number=str(channel_obj.number),
                        type="tv",
                        # TODO param
