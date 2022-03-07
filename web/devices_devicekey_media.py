@@ -23,7 +23,7 @@ class RMG_Devices_DeviceKey_Media():
             response.headers["X-fHDHR-Error"] = "801 - Unknown devicekey"
             self.fhdhr.logger.error(response.headers["X-fHDHR-Error"])
             abort(response)
-        origin = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
+        origin_name = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
 
         redirect_url = "/api/tuners?method=stream"
 
@@ -35,8 +35,8 @@ class RMG_Devices_DeviceKey_Media():
             abort(501, "Not Implemented %s" % ":".join(channel_tuple))
 
         redirect_url += "&channel=%s" % (channel)
-        redirect_url += "&origin=%s" % (origin)
-        redirect_url += "&stream_method=%s" % self.fhdhr.origins.get_origin_property(origin, "stream_method")
+        redirect_url += "&origin=%s" % (origin_name)
+        redirect_url += "&stream_method=%s" % self.fhdhr.origins.get_origin_property(origin_name, "stream_method")
 
         redirect_url += "&accessed=%s" % urllib.parse.quote(request.url)
 

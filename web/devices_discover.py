@@ -14,9 +14,9 @@ class RMG_Devices_Discover():
         self.fhdhr = fhdhr
 
     def __call__(self, *args):
-        return self.get(*args)
+        return self.handler(*args)
 
-    def get(self, *args):
+    def handler(self, *args):
         """This endpoint requests the grabber attempt to discover any devices it can, and it returns zero or more devices."""
 
         base_url = request.url_root[:-1]
@@ -24,24 +24,24 @@ class RMG_Devices_Discover():
         out = xml.etree.ElementTree.Element('MediaContainer')
         out.set('size', str(self.fhdhr.origins.count_origins))
 
-        for origin in self.fhdhr.origins.list_origins:
+        for origin_name in self.fhdhr.origins.list_origins:
 
-            if self.fhdhr.origins.get_origin_property(origin, "setup_success"):
+            if self.fhdhr.origins.get_origin_property(origin_name, "setup_success"):
                 alive_status = "alive"
             else:
                 alive_status = "dead"
 
             sub_el(out, 'Device',
-                   key="%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin),
+                   key="%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin_name),
                    make=self.fhdhr.config.dict["rmg"]["reporting_manufacturer"],
                    model=self.fhdhr.config.dict["rmg"]["reporting_model"],
                    modelNumber=self.fhdhr.config.internal["versions"]["fHDHR"],
                    protocol="livetv",
                    status=alive_status,
-                   title="%s %s" % (self.fhdhr.config.dict["fhdhr"]["friendlyname"], origin),
-                   tuners=str(self.fhdhr.origins.get_origin_property(origin, "tuners")),
-                   uri="%s/rmg/%s%s" % (base_url, self.fhdhr.config.dict["main"]["uuid"], origin),
-                   uuid="device://tv.plex.grabbers.fHDHR/%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin),
+                   title="%s %s" % (self.fhdhr.config.dict["fhdhr"]["friendlyname"], origin_name),
+                   tuners=str(self.fhdhr.origins.get_origin_property(origin_name, "tuners")),
+                   uri="%s/rmg/%s%s" % (base_url, self.fhdhr.config.dict["main"]["uuid"], origin_name),
+                   uuid="device://tv.plex.grabbers.fHDHR/%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin_name),
                    thumb="favicon.ico",
                    interface='network'
                    # TODO add preferences

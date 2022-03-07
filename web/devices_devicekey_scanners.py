@@ -24,7 +24,7 @@ class RMG_Devices_DeviceKey_Scanners():
 
         out = xml.etree.ElementTree.Element('MediaContainer')
         if devicekey.startswith(self.fhdhr.config.dict["main"]["uuid"]):
-            origin = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
+            origin_name = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
 
             if method == "0":
                 out.set('size', "1")
@@ -37,7 +37,7 @@ class RMG_Devices_DeviceKey_Scanners():
                 sub_el(scanner_out, 'Setting',
                        id="provider",
                        type="text",
-                       enumValues=origin
+                       enumValues=origin_name
                        )
 
         fakefile = BytesIO()

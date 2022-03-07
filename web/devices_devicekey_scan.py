@@ -28,9 +28,9 @@ class RMG_Devices_DeviceKey_Scan():
             out = xml.etree.ElementTree.Element('MediaContainer')
 
             if devicekey.startswith(self.fhdhr.config.dict["main"]["uuid"]):
-                origin = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
+                origin_name = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
 
-                tuner_status = self.fhdhr.device.tuners.status(origin)
+                tuner_status = self.fhdhr.device.tuners.status(origin_name)
                 tuner_scanning = 0
                 for tuner in list(tuner_status.keys()):
                     if tuner_status[tuner]["status"] == "Scanning":
@@ -56,9 +56,9 @@ class RMG_Devices_DeviceKey_Scan():
 
             out = xml.etree.ElementTree.Element('MediaContainer')
             if devicekey.startswith(self.fhdhr.config.dict["main"]["uuid"]):
-                origin = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
+                origin_name = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
 
-                self.fhdhr.device.tuners.stop_tuner_scan(origin)
+                self.fhdhr.device.tuners.stop_tuner_scan(origin_name)
                 out.set('status', "0")
                 out.set('message', "Scan Aborted")
 

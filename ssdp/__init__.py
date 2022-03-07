@@ -13,17 +13,17 @@ class Plugin_OBJ():
     def max_age(self):
         return self.fhdhr.config.dict["rmg"]["ssdp_max_age"]
 
-    def create_ssdp_content(self, origin):
+    def create_ssdp_content(self, origin_name):
         data = ''
         data_command = "NOTIFY * HTTP/1.1"
 
-        device_xml_path = "/rmg/%s/device.xml" % origin
+        device_xml_path = "/rmg/%s/device.xml" % origin_name
 
         data_dict = {
                     "HOST": "%s:%s" % ("239.255.255.250", 1900),
                     "NT": self.schema,
                     "NTS": "ssdp:alive",
-                    "USN": 'uuid:%s%s::%s' % (self.fhdhr.config.dict["main"]["uuid"], origin, self.schema),
+                    "USN": 'uuid:%s%s::%s' % (self.fhdhr.config.dict["main"]["uuid"], origin_name, self.schema),
                     "SERVER": 'fHDHR/%s UPnP/1.0' % self.fhdhr.version,
                     "LOCATION": "%s%s" % (self.fhdhr.api.base, device_xml_path),
                     "AL": "%s%s" % (self.fhdhr.api.base, device_xml_path),
@@ -40,7 +40,7 @@ class Plugin_OBJ():
     @property
     def notify(self):
         ssdp_content = []
-        for origin in self.fhdhr.origins.list_origins:
-            data = self.create_ssdp_content(origin)
+        for origin_name in self.fhdhr.origins.list_origins:
+            data = self.create_ssdp_content(origin_name)
             ssdp_content.append(data)
         return ssdp_content

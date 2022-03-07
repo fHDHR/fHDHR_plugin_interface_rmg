@@ -13,7 +13,7 @@ class RMG_Ident_XML():
         self.fhdhr = fhdhr
 
     def __call__(self, *args):
-        return self.get(*args)
+        return self.handler(*args)
 
     def get(self, devicekey, *args):
         """Device.xml referenced from SSDP"""
@@ -23,11 +23,11 @@ class RMG_Ident_XML():
 
         out = xml.etree.ElementTree.Element('MediaContainer')
         if devicekey.startswith(self.fhdhr.config.dict["main"]["uuid"]):
-            origin = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
+            origin_name = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
 
             sub_el(out, 'MediaGrabber',
-                   identifier="tv.plex.grabbers.fHDHR.%s" % origin,
-                   title="%s %s" % (self.fhdhr.config.dict["fhdhr"]["friendlyname"], origin),
+                   identifier="tv.plex.grabbers.fHDHR.%s" % origin_name,
+                   title="%s %s" % (self.fhdhr.config.dict["fhdhr"]["friendlyname"], origin_name),
                    protocols="livetv",
                    icon="%s/favicon.ico" % base_url
                    )

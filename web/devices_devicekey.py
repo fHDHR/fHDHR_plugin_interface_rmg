@@ -24,28 +24,28 @@ class RMG_Devices_DeviceKey():
         out = xml.etree.ElementTree.Element('MediaContainer')
 
         if devicekey.startswith(self.fhdhr.config.dict["main"]["uuid"]):
-            origin = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
+            origin_name = devicekey.split(self.fhdhr.config.dict["main"]["uuid"])[-1]
             out.set('size', "1")
 
-            if self.fhdhr.origins.get_origin_property(origin, "setup_success"):
+            if self.fhdhr.origins.get_origin_property(origin_name, "setup_success"):
                 alive_status = "alive"
             else:
                 alive_status = "dead"
 
             device_out = sub_el(out, 'Device',
-                                key="%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin),
+                                key="%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin_name),
                                 make=self.fhdhr.config.dict["rmg"]["reporting_manufacturer"],
                                 model=self.fhdhr.config.dict["rmg"]["reporting_model"],
                                 modelNumber=self.fhdhr.config.internal["versions"]["fHDHR"],
                                 protocol="livetv",
                                 status=alive_status,
-                                title="%s %s" % (self.fhdhr.config.dict["fhdhr"]["friendlyname"], origin),
-                                tuners=str(self.fhdhr.origins.get_origin_property(origin, "tuners")),
-                                uri="%s/rmg/%s%s" % (base_url, self.fhdhr.config.dict["main"]["uuid"], origin),
-                                uuid="device://tv.plex.grabbers.fHDHR/%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin),
+                                title="%s %s" % (self.fhdhr.config.dict["fhdhr"]["friendlyname"], origin_name),
+                                tuners=str(self.fhdhr.origins.get_origin_property(origin_name, "tuners")),
+                                uri="%s/rmg/%s%s" % (base_url, self.fhdhr.config.dict["main"]["uuid"], origin_name),
+                                uuid="device://tv.plex.grabbers.fHDHR/%s%s" % (self.fhdhr.config.dict["main"]["uuid"], origin_name),
                                 )
 
-            tuner_status = self.fhdhr.device.tuners.status(origin)
+            tuner_status = self.fhdhr.device.tuners.status(origin_name)
 
             for tuner_number in list(tuner_status.keys()):
                 tuner_dict = tuner_status[tuner_number]
@@ -75,7 +75,7 @@ class RMG_Devices_DeviceKey():
                            index=tuner_number,
                            status="scanning",
                            progress="99",
-                           channelsFound=str(self.fhdhr.origins.origins_dict[origin].channels.count_channels),
+                           channelsFound=str(self.fhdhr.origins.origins_dict[origin_name].channels.count_channels),
                            )
 
                 # TODO networksScanned
